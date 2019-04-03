@@ -6,7 +6,7 @@
 #include "Csequential.h"
 #include "common.h"
 
-bool CSequential::generatePoints() {
+bool CSequential::generatePoints(long count) {
     // here we will generate points from 2-16 dimensions
     vf distance;
     vf points;
@@ -19,7 +19,7 @@ bool CSequential::generatePoints() {
         int n = 0;
         d_points.clear();
         float e_dist = 0;
-        while(n != 1000)
+        while(n != count)
         {
             points.clear();
             for (int j = 0; j < i; j++) {
@@ -27,20 +27,20 @@ bool CSequential::generatePoints() {
                 points.push_back(p);
             }
 
+            // Calculate distance here.
             float sum = 0;
             for(auto& num : points)
             {
                 sum += (num * num);
             }
 
-            if(sum > 1.0)
+            if(sum > 1)
                 continue;
-            else
+            else if(sum <= 1)
             {
                 n++;
-                // Calculating euclidean distance here for selected points [ useful for plotting histogram]
                 vf origin(i,0);
-                e_dist = vectorDistance(points.begin(), points.end(), origin.begin());
+                e_dist = 1 - sum;
                 d_points.push_back(std::make_pair(points, e_dist));
             }
         }
