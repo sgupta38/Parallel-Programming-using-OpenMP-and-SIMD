@@ -10,7 +10,7 @@
 #include "matplotlibcpp.h"
 namespace plt = matplotlibcpp;
 
-const vvvf &CParallel::getPoints() const {
+const vvf &CParallel::getPoints() const {
     return final_points;
 }
 
@@ -103,4 +103,96 @@ bool CParallel::generatePoints(long count, int thread) {
     }
 
     return true;
+}
+
+bool CParallel::generatePointsEx(long count) {
+    // here we will generate points from 2-16 dimensions
+    vvf distance;
+    std::default_random_engine eng;
+    std::uniform_real_distribution<float> dist(-1, 1);
+    float final[count];
+    float Buckets[count];
+
+    for(int i = 2; i <= 16; i++)
+    {
+#pragma omp parallel for
+        for(int i = 0; i<count; i++)
+            final[i] = 0;
+
+#pragma omp parallel
+        {
+
+            #pragma omp for
+            for (int n = 0; n < count;n++)
+            {
+                vf points(i);
+                for (int j = 0; j < i; j++) {
+                    float p = dist(eng);
+                    points[j] = p;
+                }
+
+                // Calculate distance here.
+                float sum = 0;
+                for (auto &num : points) {
+                    sum += (num * num);
+                }
+
+                // final, sqrt of distance
+                sum = sqrt(sum);
+
+                if (sum > 1)
+                {
+                    n--;
+                    continue;   // point is outside sphere, ignore and find new point
+                }
+                else if (sum <= 1) {    // point is inside sphere, considering it.
+                    final[n] = 1 - sum;
+                }
+            }
+        }
+
+        vf temp(final, final+count);
+        final_points.push_back(temp);
+
+//        // Normalize to buckets of size 100 intervals.
+//        for(int i=0; i<count; i++){
+//            int bin = int(final[i] * 100);
+//            Buckets[bin] = Buckets[bin] + 1; // count total members
+//        }
+//
+//        // steps of 0.01
+//        for(int i=0; i<count-1; i++){
+//            Buckets[i] = float(Buckets[i])/float(count) * 100; // count total members
+//        }
+//        Buckets[99] = Buckets[99] + Buckets[100];
+//
+//        vf ff(Buckets, Buckets + count);
+//        cout<<" For dimension: "<<i<<endl;
+//        for(int k = 0; k< 100; k++)
+//        {
+//            //cout<<final[k] <<" ";
+//            cout<<fixed<<"\n Dimension :"<<i<<" Bucket: "<<k<<"--> "<<float(Buckets[k])<<"\n";
+//        }
+//
+//        plt::hist(ff);
+//        plt::title("Histogram");
+//        plt::show();
+//        cout<<endl;
+    }
+
+    return true;
+}
+
+bool CParallel::printPoints() {
+    int d = 2;
+    for(auto& points : final_points)
+    {
+        cout<<" Dim: "<<d<<" ";
+        for(auto&p:points)
+        {
+            cout<<p<<" ";
+        }
+        cout<<endl;
+        d++;
+    }
 }

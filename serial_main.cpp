@@ -8,8 +8,9 @@ int
 main()
 {
     CSequential seq;
-    seq.generatePointsEx(1000);
-    vvvf res = seq.getPoints();
+    seq.generatePointsEx(100);
+    vvf res = seq.getPoints();
+    seq.printPoints();
     return 0;
 }
 

@@ -10,12 +10,14 @@
 class CSequential
 {
 private:
-    vvvf final_points;
+    vvf final_points;
 public:
-    const vvvf &getPoints() const;
+    const vvf &getPoints() const;
     int writeToFile();
     bool generatePoints(long n);
     bool generatePointsEx(long n);
+    bool printPoints();
+
 };
 
 #endif //ASSIGNMENT_2_SGUPTA38_CSEQUENTIAL_H

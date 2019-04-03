@@ -42,16 +42,16 @@ bool CSequential::generatePoints(long count) {                      // Obsolete:
                 n++;
                 vf origin(i,0);
                 e_dist = 1 - sum;
-                d_points.push_back(std::make_pair(points, e_dist));
+//                d_points.push_back(std::make_pair(points, e_dist));
             }
         }
-        final_points.push_back(d_points);
+//        final_points.push_back(d_points);
     }
 
     return true;
 }
 
-const vvvf &CSequential::getPoints() const {
+const vvf &CSequential::getPoints() const {
     return final_points;
 }
 
@@ -79,10 +79,14 @@ bool CSequential::generatePointsEx(long count) {
     std::uniform_real_distribution<float> dist(-1, 1);
     float final[count];
 
-    for(int i = 2; i <= 16; i++) {
-        float e_dist = 0;
+    for(int i = 2; i <= 16; i++)
+    {
+        for(int i = 0 ; i < count; i++)
+        {
+            final[i] = 0;
+        }
 
-        for (int n = 0; n < count;)
+        for (int n = 0; n < count;n++)
         {
             vf points(i);
             for (int j = 0; j < i; j++) {
@@ -96,20 +100,33 @@ bool CSequential::generatePointsEx(long count) {
                 sum += (num * num);
             }
 
-            if (sum > 1)
+            sum = sqrt(sum);
+
+            if (sum > 1) {
+                n--;
                 continue;
+            }
             else if (sum <= 1) {
-                e_dist = 1 - sum;
-                final[n] = e_dist;
-                n++;
+                final[n] = 1 - sum;
             }
         }
 
-        cout<<" For dimension: "<<i<<endl;
-        for(int k = 0; k< count; k++)
+        vf temp(final, final+count);
+        final_points.push_back(temp);
+    }
+    return true;
+}
+
+bool CSequential::printPoints() {
+    int d = 2;
+    for(auto& points : final_points)
+    {
+        cout<<" Dim: "<<d<<" ";
+        for(auto&p:points)
         {
-            cout<<final[k] <<" ";
+            cout<<p<<" ";
         }
         cout<<endl;
+        d++;
     }
 }

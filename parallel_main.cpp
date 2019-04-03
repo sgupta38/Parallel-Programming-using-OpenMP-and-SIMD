@@ -8,11 +8,9 @@
 int
 main()
 {
-    // todo: Take number of threads from command line
-    int numthreads = 2;
-    omp_set_num_threads(numthreads);
     CParallel par;
-    par.generatePoints(100, numthreads);
-    vvvf res = par.getPoints();
+    par.generatePointsEx(100);
+    vvf res = par.getPoints();
+    par.printPoints();
     return 0;
 }

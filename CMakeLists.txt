@@ -12,8 +12,8 @@ add_executable(
         Csequential.h
         CParallel.cpp
         CParallel.h
-        #serial_main.cpp
-        parallel_main.cpp
+        serial_main.cpp
+        #parallel_main.cpp
         matplotlibcpp.h
         )
 

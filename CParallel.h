@@ -10,11 +10,13 @@
 class CParallel
 {
 private:
-    vvvf final_points;
+    vvf final_points;
 public:
-    const vvvf &getPoints() const;
+    const vvf &getPoints() const;
     int writeToFile();
     bool generatePoints(long n, int);
+    bool generatePointsEx(long n);
+    bool printPoints();
     float *m_final;
 
     CParallel()

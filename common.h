@@ -10,10 +10,11 @@
 #include <string>
 #include <random>
 #include <fstream>
+#include <math.h>
 
 using namespace std;
 
 typedef vector<float> vf;
-typedef vector<pair<vf, float>> vvf;
+typedef vector<vf> vvf;
 typedef vector<vvf> vvvf;
 #endif //ASSIGNMENT_2_SGUPTA38_COMMON_H
