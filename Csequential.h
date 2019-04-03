@@ -15,6 +15,7 @@ public:
     const vvvf &getPoints() const;
     int writeToFile();
     bool generatePoints(long n);
+    bool generatePointsEx(long n);
 };
 
 #endif //ASSIGNMENT_2_SGUPTA38_CSEQUENTIAL_H

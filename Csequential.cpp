@@ -6,7 +6,8 @@
 #include "Csequential.h"
 #include "common.h"
 
-bool CSequential::generatePoints(long count) {
+// Note: using generatePointsEx instead.
+bool CSequential::generatePoints(long count) {                      // Obsolete: Not using this
     // here we will generate points from 2-16 dimensions
     vf distance;
     vf points;
@@ -68,4 +69,47 @@ int CSequential::writeToFile() {
 
     ofs.close() ;
     return 0;
+}
+
+// Similar to parallel execution code
+bool CSequential::generatePointsEx(long count) {
+    // here we will generate points from 2-16 dimensions
+    vf distance;
+    std::default_random_engine eng;
+    std::uniform_real_distribution<float> dist(-1, 1);
+    float final[count];
+
+    for(int i = 2; i <= 16; i++) {
+        float e_dist = 0;
+
+        for (int n = 0; n < count;)
+        {
+            vf points(i);
+            for (int j = 0; j < i; j++) {
+                float p = dist(eng);
+                points[j] = p;
+            }
+
+            // Calculate distance here.
+            float sum = 0;
+            for (auto &num : points) {
+                sum += (num * num);
+            }
+
+            if (sum > 1)
+                continue;
+            else if (sum <= 1) {
+                e_dist = 1 - sum;
+                final[n] = e_dist;
+                n++;
+            }
+        }
+
+        cout<<" For dimension: "<<i<<endl;
+        for(int k = 0; k< count; k++)
+        {
+            cout<<final[k] <<" ";
+        }
+        cout<<endl;
+    }
 }

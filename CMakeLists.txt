@@ -14,4 +14,7 @@ add_executable(
         CParallel.h
         #serial_main.cpp
         parallel_main.cpp
+        matplotlibcpp.h
         )
+
+target_link_libraries(sequential ${PYTHON_LIBRARIES})

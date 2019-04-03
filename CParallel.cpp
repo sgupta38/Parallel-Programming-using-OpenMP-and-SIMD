@@ -7,6 +7,8 @@
 #include "common.h"
 #include <omp.h>
 #include <cstring>
+#include "matplotlibcpp.h"
+namespace plt = matplotlibcpp;
 
 const vvvf &CParallel::getPoints() const {
     return final_points;
@@ -35,8 +37,10 @@ bool CParallel::generatePoints(long count, int thread) {
     std::uniform_real_distribution<float> dist(-1, 1);
     int workPerThread = count/thread;
     float final[count];
+    float Buckets[count];
 
     for(int i = 2; i <= 16; i++) {
+        memset(Buckets, 0, sizeof(Buckets));
 #pragma omp parallel
         {
             int id = omp_get_thread_num();
@@ -72,11 +76,29 @@ bool CParallel::generatePoints(long count, int thread) {
             }
         }
 
-        cout<<" For dimension: "<<i<<endl;
-        for(int k = 0; k< count; k++)
-        {
-            cout<<final[k] <<" ";
+        // Normalize to buckets of size 100 intervals.
+        for(int i=0; i<count; i++){
+            int bin = int(final[i] * 100);
+            Buckets[bin] = Buckets[bin] + 1; // count total members
         }
+
+        // steps of 0.01
+        for(int i=0; i<count-1; i++){
+            Buckets[i] = float(Buckets[i])/float(count) * 100; // count total members
+        }
+        Buckets[99] = Buckets[99] + Buckets[100];
+
+        vf ff(Buckets, Buckets + count);
+        cout<<" For dimension: "<<i<<endl;
+        for(int k = 0; k< 100; k++)
+        {
+            //cout<<final[k] <<" ";
+            cout<<fixed<<"\n Dimension :"<<i<<" Bucket: "<<k<<"--> "<<float(Buckets[k])<<"\n";
+        }
+
+        plt::hist(ff);
+        plt::title("Histogram");
+        plt::show();
         cout<<endl;
     }
 
