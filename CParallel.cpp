@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <iomanip>
 #include "CParallel.h"
 #include "common.h"
 #include <omp.h>
@@ -96,9 +97,9 @@ bool CParallel::generatePoints(long count, int thread) {
             cout<<fixed<<"\n Dimension :"<<i<<" Bucket: "<<k<<"--> "<<float(Buckets[k])<<"\n";
         }
 
-        plt::hist(ff);
-        plt::title("Histogram");
-        plt::show();
+//        plt::hist(ff);
+//        plt::title("Histogram");
+//        plt::show();
         cout<<endl;
     }
 
@@ -111,13 +112,16 @@ bool CParallel::generatePointsEx(long count) {
     std::default_random_engine eng;
     std::uniform_real_distribution<float> dist(-1, 1);
     float final[count];
-    float Buckets[count];
 
     for(int i = 2; i <= 16; i++)
     {
+        float Buckets[100] = {0};
+
 #pragma omp parallel for
-        for(int i = 0; i<count; i++)
+        for(int i = 0; i<count; i++) {
             final[i] = 0;
+        }
+
 
 #pragma omp parallel
         {
@@ -147,37 +151,24 @@ bool CParallel::generatePointsEx(long count) {
                 }
                 else if (sum <= 1) {    // point is inside sphere, considering it.
                     final[n] = 1 - sum;
+                    int bin = (int)floor(final[n] * 100);
+                    Buckets[bin] = Buckets[bin] + 1; // count total members
                 }
             }
         }
 
         vf temp(final, final+count);
+        vf buckets(Buckets, Buckets+100);
+        //plotGraph(temp);
+        plotGraph(buckets);
         final_points.push_back(temp);
 
-//        // Normalize to buckets of size 100 intervals.
-//        for(int i=0; i<count; i++){
-//            int bin = int(final[i] * 100);
-//            Buckets[bin] = Buckets[bin] + 1; // count total members
-//        }
-//
-//        // steps of 0.01
-//        for(int i=0; i<count-1; i++){
-//            Buckets[i] = float(Buckets[i])/float(count) * 100; // count total members
-//        }
-//        Buckets[99] = Buckets[99] + Buckets[100];
-//
-//        vf ff(Buckets, Buckets + count);
-//        cout<<" For dimension: "<<i<<endl;
-//        for(int k = 0; k< 100; k++)
-//        {
-//            //cout<<final[k] <<" ";
-//            cout<<fixed<<"\n Dimension :"<<i<<" Bucket: "<<k<<"--> "<<float(Buckets[k])<<"\n";
-//        }
-//
-//        plt::hist(ff);
-//        plt::title("Histogram");
-//        plt::show();
-//        cout<<endl;
+        cout<<" Dimension: "<<i<<endl;
+        for(int k = 0; k< 100; k++)
+        {
+            cout<<fixed<<setprecision(2)<< k * 0.01<<"-"<<(k+1) * 0.01<<": "<<Buckets[k]<<endl;
+        }
+        cout<<endl;
     }
 
     return true;
@@ -195,4 +186,10 @@ bool CParallel::printPoints() {
         cout<<endl;
         d++;
     }
+}
+
+void CParallel::plotGraph(vf &data) {
+    plt::hist(data);
+    plt::title("Histogram");
+    plt::show();
 }

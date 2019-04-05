@@ -17,6 +17,8 @@ public:
     bool generatePoints(long n);
     bool generatePointsEx(long n);
     bool printPoints();
+    void plotGraph(vf& data);
+
 
 };
 

@@ -18,7 +18,7 @@ public:
     bool generatePointsEx(long n);
     bool printPoints();
     float *m_final;
-
+    void plotGraph(vf& data);
     CParallel()
     {
         m_final = nullptr;

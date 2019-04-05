@@ -9,8 +9,8 @@ int
 main()
 {
     CParallel par;
-    par.generatePointsEx(100);
+    par.generatePointsEx(1000);
     vvf res = par.getPoints();
-    par.printPoints();
+    //par.printPoints();
     return 0;
 }

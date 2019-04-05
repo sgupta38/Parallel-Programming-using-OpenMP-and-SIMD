@@ -5,6 +5,8 @@
 #include <iostream>
 #include "Csequential.h"
 #include "common.h"
+#include "matplotlibcpp.h"
+namespace plt = matplotlibcpp;
 
 // Note: using generatePointsEx instead.
 bool CSequential::generatePoints(long count) {                      // Obsolete: Not using this
@@ -81,6 +83,7 @@ bool CSequential::generatePointsEx(long count) {
 
     for(int i = 2; i <= 16; i++)
     {
+        float Buckets[100] = {0};
         for(int i = 0 ; i < count; i++)
         {
             final[i] = 0;
@@ -108,11 +111,23 @@ bool CSequential::generatePointsEx(long count) {
             }
             else if (sum <= 1) {
                 final[n] = 1 - sum;
+                int bin = (int)floor(final[n] * 100);
+                Buckets[bin] = Buckets[bin] + 1; // count total members
             }
         }
 
         vf temp(final, final+count);
+        //vf buckets(Buckets, Buckets+100);
+        //plotGraph(temp);
+        //plotGraph(buckets);
         final_points.push_back(temp);
+
+        cout<<" Dimension: "<<i<<endl;
+        for(int k = 0; k< 100; k++)
+        {
+            cout<<fixed<<setprecision(2)<< k * 0.01<<"-"<<(k+1) * 0.01<<": "<<Buckets[k]<<endl;
+        }
+        cout<<endl;
     }
     return true;
 }
@@ -129,4 +144,10 @@ bool CSequential::printPoints() {
         cout<<endl;
         d++;
     }
+}
+
+void CSequential::plotGraph(vf &data) {
+    plt::hist(data);
+    plt::title("Histogram");
+    plt::show();
 }
