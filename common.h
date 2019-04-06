@@ -20,6 +20,7 @@ typedef vector<float> vf;
 typedef vector<vf> vvf;
 typedef vector<vvf> vvvf;
 
+#define ENABLE_MATPLOTLIB 0
 #define GRAPH_PARALLEL "graphs_parallel"
 #define GRAPH_SEQUENTIAL "graphs_sequential"
 

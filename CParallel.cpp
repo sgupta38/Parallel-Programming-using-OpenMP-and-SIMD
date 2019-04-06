@@ -42,15 +42,16 @@ bool CParallel::generatePointsEx(long count) {
     {
         float Buckets[100] = {0};
 
-#pragma omp parallel for
-        for(int i = 0; i<count; i++) {
-            final[i] = 0;
-        }
-
+#pragma omp parallel
+        {
+            #pragma omp for
+            for(int i = 0; i<count; i++) {
+                final[i] = 0;
+            }
+        };
 
 #pragma omp parallel
         {
-
             #pragma omp for
             for (int n = 0; n < count;n++)
             {
