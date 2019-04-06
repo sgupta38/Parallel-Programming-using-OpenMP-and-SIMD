@@ -3,14 +3,12 @@
 //
 
 #include "Csequential.h"
-
+const int N = 1000; // number of points
 int
 main()
 {
     CSequential seq;
-    seq.generatePointsEx(1000);
-    vvf res = seq.getPoints();
-    seq.printPoints();
+    seq.generatePointsEx(N);
     return 0;
 }
 

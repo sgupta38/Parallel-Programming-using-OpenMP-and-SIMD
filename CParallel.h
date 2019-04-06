@@ -14,11 +14,12 @@ private:
 public:
     const vvf &getPoints() const;
     int writeToFile();
-    bool generatePoints(long n, int);
     bool generatePointsEx(long n);
     bool printPoints();
     float *m_final;
     void plotGraph(vf& data);
+    void printBuckets(int, float [] );
+
     CParallel()
     {
         m_final = nullptr;

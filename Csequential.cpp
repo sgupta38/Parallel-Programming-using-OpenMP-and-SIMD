@@ -8,51 +8,6 @@
 #include "matplotlibcpp.h"
 namespace plt = matplotlibcpp;
 
-// Note: using generatePointsEx instead.
-bool CSequential::generatePoints(long count) {                      // Obsolete: Not using this
-    // here we will generate points from 2-16 dimensions
-    vf distance;
-    vf points;
-    vvf d_points;
-    std::default_random_engine eng;
-    std::uniform_real_distribution<float> dist(-1, 1);
-
-    for(int i = 2; i <= 16; i++)
-    {
-        int n = 0;
-        d_points.clear();
-        float e_dist = 0;
-        while(n != count)
-        {
-            points.clear();
-            for (int j = 0; j < i; j++) {
-                float p = dist(eng);
-                points.push_back(p);
-            }
-
-            // Calculate distance here.
-            float sum = 0;
-            for(auto& num : points)
-            {
-                sum += (num * num);
-            }
-
-            if(sum > 1)
-                continue;
-            else if(sum <= 1)
-            {
-                n++;
-                vf origin(i,0);
-                e_dist = 1 - sum;
-//                d_points.push_back(std::make_pair(points, e_dist));
-            }
-        }
-//        final_points.push_back(d_points);
-    }
-
-    return true;
-}
-
 const vvf &CSequential::getPoints() const {
     return final_points;
 }
@@ -116,18 +71,12 @@ bool CSequential::generatePointsEx(long count) {
             }
         }
 
-        vf temp(final, final+count);
-        //vf buckets(Buckets, Buckets+100);
+        //vf temp(final, final+count);
         //plotGraph(temp);
-        //plotGraph(buckets);
-        final_points.push_back(temp);
-
-        cout<<" Dimension: "<<i<<endl;
-        for(int k = 0; k< 100; k++)
-        {
-            cout<<fixed<<setprecision(2)<< k * 0.01<<"-"<<(k+1) * 0.01<<": "<<Buckets[k]<<endl;
-        }
-        cout<<endl;
+        //final_points.push_back(temp);
+        printBuckets(i, Buckets);
+        vf buckets(Buckets, Buckets+100);
+        plotGraph(buckets); // Instead of plotting all points, normalized points are printted
     }
     return true;
 }
@@ -150,4 +99,13 @@ void CSequential::plotGraph(vf &data) {
     plt::hist(data);
     plt::title("Histogram");
     plt::show();
+}
+
+void CSequential::printBuckets(int dim, float Buckets[]) {
+    cout<<" Dimension: "<<dim<<endl;
+    for(int k = 0; k< 100; k++)
+    {
+        cout<<fixed<<setprecision(2)<< k * 0.01<<"-"<<(k+1) * 0.01<<": "<<Buckets[k]<<endl;
+    }
+    cout<<endl;
 }

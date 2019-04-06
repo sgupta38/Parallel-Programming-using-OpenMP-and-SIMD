@@ -4,13 +4,12 @@
 
 #include "CParallel.h"
 #include <omp.h>
+const int N = 1000; // number of points
 
 int
 main()
 {
     CParallel par;
-    par.generatePointsEx(1000);
-    vvf res = par.getPoints();
-    //par.printPoints();
+    par.generatePointsEx(N);
     return 0;
 }

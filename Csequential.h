@@ -14,12 +14,10 @@ private:
 public:
     const vvf &getPoints() const;
     int writeToFile();
-    bool generatePoints(long n);
     bool generatePointsEx(long n);
     bool printPoints();
     void plotGraph(vf& data);
-
-
+    void printBuckets(int, float [] );
 };
 
 #endif //ASSIGNMENT_2_SGUPTA38_CSEQUENTIAL_H
