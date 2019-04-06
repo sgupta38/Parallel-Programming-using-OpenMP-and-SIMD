@@ -16,8 +16,13 @@ public:
     int writeToFile();
     bool generatePointsEx(long n);
     bool printPoints();
-    void plotGraph(vf& data);
+    void plotGraph(int dim, vf& data, int save);
     void printBuckets(int, float [] );
+    CSequential()
+    {
+        // Directories where graphs will be stored
+        mkdir(GRAPH_SEQUENTIAL, 0777);
+    }
 };
 
 #endif //ASSIGNMENT_2_SGUPTA38_CSEQUENTIAL_H

@@ -87,8 +87,10 @@ bool CParallel::generatePointsEx(long count) {
         //final_points.push_back(temp);
 
         printBuckets(i, Buckets);
+
         vf buckets(Buckets, Buckets+100);
-        plotGraph(buckets);
+        plotGraph(i, buckets, 1);
+        buckets.clear();
 
         cout<<" Dimension: "<<i<<endl;
         for(int k = 0; k< 100; k++)
@@ -115,10 +117,21 @@ bool CParallel::printPoints() {
     }
 }
 
-void CParallel::plotGraph(vf &data) {
+void CParallel::plotGraph(int dim, vf &data, int save) {
+    std::string name = "Dimension" + std::to_string(dim);
+    std::string filename = name += ".png";
+
     plt::hist(data);
-    plt::title("Histogram");
-    plt::show();
+    plt::title(name);
+
+    if(save) {
+        std::string path = GRAPH_PARALLEL;
+        path += "/" + filename;
+        plt::save(path);
+        plt::close();
+    }
+    else
+        plt::show();
 }
 
 void CParallel::printBuckets(int dim, float Buckets[]) {

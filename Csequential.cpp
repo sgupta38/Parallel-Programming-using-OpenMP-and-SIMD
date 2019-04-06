@@ -76,7 +76,7 @@ bool CSequential::generatePointsEx(long count) {
         //final_points.push_back(temp);
         printBuckets(i, Buckets);
         vf buckets(Buckets, Buckets+100);
-        plotGraph(buckets); // Instead of plotting all points, normalized points are printted
+        plotGraph(i, buckets, 1); // Instead of plotting all points, normalized points are printted
     }
     return true;
 }
@@ -95,10 +95,21 @@ bool CSequential::printPoints() {
     }
 }
 
-void CSequential::plotGraph(vf &data) {
+void CSequential::plotGraph(int dim, vf &data, int save) {
+    std::string name = "Dimension" + std::to_string(dim);
+    std::string filename = name += ".png";
+
     plt::hist(data);
-    plt::title("Histogram");
-    plt::show();
+    plt::title(name);
+
+    if(save) {
+        std::string path = GRAPH_SEQUENTIAL;
+        path += "/" + filename;
+        plt::save(path);
+        plt::close();
+    }
+    else
+        plt::show();
 }
 
 void CSequential::printBuckets(int dim, float Buckets[]) {

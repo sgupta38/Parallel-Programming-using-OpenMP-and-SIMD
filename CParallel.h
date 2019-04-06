@@ -17,12 +17,15 @@ public:
     bool generatePointsEx(long n);
     bool printPoints();
     float *m_final;
-    void plotGraph(vf& data);
+    void plotGraph(int dim, vf& data, int save);
     void printBuckets(int, float [] );
 
     CParallel()
     {
         m_final = nullptr;
+
+        // Directories where graphs will be stored
+        mkdir(GRAPH_PARALLEL, 0777);
     }
 
     ~CParallel()
