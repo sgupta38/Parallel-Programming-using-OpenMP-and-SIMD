@@ -27,8 +27,7 @@ main(int argc, char *argv[])
     std::cout<<" Number of points: "<<N<<endl;
     CSequential seq;
     seq.generatePointsEx(N);
-
-    seq.plotGlobalGraph();
+    seq.plotGlobalGraph(); // Gracefull handling
     return 0;
 }
 

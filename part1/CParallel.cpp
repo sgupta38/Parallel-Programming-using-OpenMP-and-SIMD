@@ -92,13 +92,6 @@ bool CParallel::generatePointsEx(long count) {
         //vf buckets(Buckets, Buckets+100);
         //plotGraph(i, buckets, 1);
         //buckets.clear();
-
-        cout<<" Dimension: "<<i<<endl;
-        for(int k = 0; k< 100; k++)
-        {
-            cout<<fixed<<setprecision(2)<< k * 0.01<<"-"<<(k+1) * 0.01<<": "<<Buckets[k]<<endl;
-        }
-        cout<<endl;
     }
 
     return true;
