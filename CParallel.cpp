@@ -83,14 +83,14 @@ bool CParallel::generatePointsEx(long count) {
             }
         }
 
-        //vf temp(final, final+count);
-        //plotGraph(temp);
+        vf temp(final, final+count);
+        plotGraph(i, temp, 1); // plotting for 'N' points.
         //final_points.push_back(temp);
 
-        printBuckets(i, Buckets);
+        printBuckets(i, Buckets); // Showing on console.
 
         vf buckets(Buckets, Buckets+100);
-        plotGraph(i, buckets, 1);
+        //plotGraph(i, buckets, 1);
         buckets.clear();
 
         cout<<" Dimension: "<<i<<endl;

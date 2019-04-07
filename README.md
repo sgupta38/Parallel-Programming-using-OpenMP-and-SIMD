@@ -2,15 +2,17 @@
 CS 447/547 2019 S: Assignment 2
 http://www.cs.binghamton.edu/~kchiu/cs547/prog/2/
 
-*Note*: 
-	- Used 3rd party libary [https://github.com/lava/matplotlib-cpp] for plotting histograms.
+**Note** : 
+	- Used [Matplotlib](https://github.com/lava/matplotlib-cpp) , a 3rd party libary for plotting histograms.
 	- No memory leaks in actual program[ I've verified] . However, since this 3rd paty has been included, it gives some memory leaks.
 
 How to Run?
 
-### part 1:
+### Part 1:
 
-To cmpile 
+To see actual results in graph, try to plot more than **1000** points.
+
+To compile 
 
 	> make
 
@@ -18,13 +20,16 @@ To cmpile
 
  To run Sequential version:
 
- 	> ./sequential_sphere
+ 	> ./sequential_sphere <number_of_points>
 
  To run Parallel versin:
 
- 	> ./parallel_sphere
+ 	> ./parallel_sphere <number_of_points>
 
-#### part 2:
+
+ For each version, separate __'graphs_xxx'__ is created which has 'Histograms' of all points. A third party library is used for this.
+
+#### Part 2:
 
 To compile:
 

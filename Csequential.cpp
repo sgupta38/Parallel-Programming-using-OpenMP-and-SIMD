@@ -71,12 +71,12 @@ bool CSequential::generatePointsEx(long count) {
             }
         }
 
-        //vf temp(final, final+count);
-        //plotGraph(temp);
+        vf temp(final, final+count);
         //final_points.push_back(temp);
-        printBuckets(i, Buckets);
+        plotGraph(i, temp, 1); // plotting for 'N' points.
+        printBuckets(i, Buckets); // Showing on console.
         vf buckets(Buckets, Buckets+100);
-        plotGraph(i, buckets, 1); // Instead of plotting all points, normalized points are printted
+        //plotGraph(i, buckets, 1); // Instead of plotting all points, normalized points are printted
     }
     return true;
 }
@@ -95,7 +95,6 @@ bool CSequential::printPoints() {
     }
 }
 
-#ifdef ENABLE_MATPLOTLIB
 void CSequential::plotGraph(int dim, vf &data, int save) {
     std::string name = "Dimension" + std::to_string(dim);
     std::string filename = name += ".png";
@@ -112,7 +111,6 @@ void CSequential::plotGraph(int dim, vf &data, int save) {
     else
         plt::show();
 }
-#endif
 
 void CSequential::printBuckets(int dim, float Buckets[]) {
     cout<<" Dimension: "<<dim<<endl;
