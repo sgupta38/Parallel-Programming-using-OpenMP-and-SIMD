@@ -28,5 +28,6 @@ main(int argc, char* argv[])
     std::cout<<" Number of points: "<<N<<endl;
     CParallel par;
     par.generatePointsEx(N);
+    par.plotGlobalGraph();
     return 0;
 }

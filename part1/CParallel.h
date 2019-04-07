@@ -19,6 +19,7 @@ public:
     float *m_final;
     void plotGraph(int dim, vf& data, int save);
     void printBuckets(int, float [] );
+    void plotGlobalGraph();
 
     CParallel()
     {

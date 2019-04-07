@@ -72,10 +72,10 @@ bool CSequential::generatePointsEx(long count) {
         }
 
         vf temp(final, final+count);
-        //final_points.push_back(temp);
-        plotGraph(i, temp, 1); // plotting for 'N' points.
+        final_points.push_back(temp);
+        //plotGraph(i, temp, 1); // plotting for 'N' points. // Bug: Gracefull handling by calling globalgraph function
         printBuckets(i, Buckets); // Showing on console.
-        vf buckets(Buckets, Buckets+100);
+        //vf buckets(Buckets, Buckets+100);
         //plotGraph(i, buckets, 1); // Instead of plotting all points, normalized points are printted
     }
     return true;
@@ -119,4 +119,16 @@ void CSequential::printBuckets(int dim, float Buckets[]) {
         cout<<fixed<<setprecision(2)<< k * 0.01<<"-"<<(k+1) * 0.01<<": "<<Buckets[k]<<endl;
     }
     cout<<endl;
+}
+
+void CSequential::plotGlobalGraph() {
+    try {
+        for (int i = 2; i <= 16; i++) {
+            plotGraph(i, final_points[i - 2], 1);
+        }
+    }catch(...)
+    {
+        std::cout<<"Error: Can't plot graph. Some problem with 3rd party library.\n";
+        return;
+    }
 }

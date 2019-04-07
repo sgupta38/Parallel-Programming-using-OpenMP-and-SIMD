@@ -84,14 +84,14 @@ bool CParallel::generatePointsEx(long count) {
         }
 
         vf temp(final, final+count);
-        plotGraph(i, temp, 1); // plotting for 'N' points.
-        //final_points.push_back(temp);
+        //plotGraph(i, temp, 1); // plotting for 'N' points. // Bug: Not running on remote. Gracefully handling at the end;
+        final_points.push_back(temp);
 
         printBuckets(i, Buckets); // Showing on console.
 
-        vf buckets(Buckets, Buckets+100);
+        //vf buckets(Buckets, Buckets+100);
         //plotGraph(i, buckets, 1);
-        buckets.clear();
+        //buckets.clear();
 
         cout<<" Dimension: "<<i<<endl;
         for(int k = 0; k< 100; k++)
@@ -142,4 +142,16 @@ void CParallel::printBuckets(int dim, float Buckets[]) {
         cout<<fixed<<setprecision(2)<< k * 0.01<<"-"<<(k+1) * 0.01<<": "<<Buckets[k]<<endl;
     }
     cout<<endl;
+}
+
+void CParallel::plotGlobalGraph() {
+    try {
+        for (int i = 2; i <= 16; i++) {
+            plotGraph(i, final_points[i - 2], 1);
+        }
+    }catch(...)
+    {
+        std::cout<<"Error: Can't plot graph. Some problem with 3rd party library.\n";
+        return;
+    }
 }

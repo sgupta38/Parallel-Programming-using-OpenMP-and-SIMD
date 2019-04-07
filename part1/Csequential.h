@@ -17,6 +17,7 @@ public:
     bool generatePointsEx(long n);
     bool printPoints();
     void plotGraph(int dim, vf& data, int save);
+    void plotGlobalGraph();
     void printBuckets(int, float [] );
     CSequential()
     {
