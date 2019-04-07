@@ -1,6 +1,6 @@
 # Assignment-2
-CS 447/547 2019 S: Assignment 2
-http://www.cs.binghamton.edu/~kchiu/cs547/prog/2/
+
+CS 447/547 2019 S: [Assignment 2](http://www.cs.binghamton.edu/~kchiu/cs547/prog/2/)
 
 **Note** : 
 	- Used [Matplotlib](https://github.com/lava/matplotlib-cpp) , a 3rd party libary for plotting histograms.
@@ -8,7 +8,7 @@ http://www.cs.binghamton.edu/~kchiu/cs547/prog/2/
 
 How to Run?
 
-### Part 1:
+### Part 1: High-dimensional Sphere
 
 To see actual results in graph, try to plot more than **1000** points.
 
@@ -29,7 +29,9 @@ To compile
 
  For each version, separate __'graphs_xxx'__ is created which has 'Histograms' of all points. A third party library is used for this.
 
-#### Part 2:
+#### Part 2: SIMD(AVX specification) for computing lengths of a sequence of line segments.
+
+	Computing 24000000 segments and showing results on condole.
 
 To compile:
 
