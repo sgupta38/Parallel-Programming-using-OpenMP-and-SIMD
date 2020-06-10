@@ -1,6 +1,6 @@
-# Assignment-2
+# Parallel Programming using OpenMP and SIMD
 
-CS 447/547 2019 S: [Assignment 2](http://www.cs.binghamton.edu/~kchiu/cs547/prog/2/)
+[Problem Statement](http://www.cs.binghamton.edu/~kchiu/cs547/prog/3/)
 
 **Note** : 
 	- Used [Matplotlib](https://github.com/lava/matplotlib-cpp) , a 3rd party libary for plotting histograms.
